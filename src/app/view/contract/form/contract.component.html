@@ -1,0 +1,365 @@
+<!-- <secure-header *ngIf="isLogin"></secure-header> -->
+<section class="content-block">
+    <div class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="caption-main">
+                    <!-- <mat-card-title>Register a User</mat-card-title> -->
+                </div>
+            </div>
+            <div class="col-md-10">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-item-center">
+        <div class="col-lg-12 col-md-12 col-xs-12 tr-campaign case">
+            <mat-card class="two-row-card mat-card">
+                <div class="tr-sec-box">
+                    <div class="row align-item-center">
+                        <mat-progress-bar *ngIf='isSubmitted' color="warn" mode="indeterminate"></mat-progress-bar>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <mat-card-title>Create Contract</mat-card-title>
+                        </div>
+
+                        <div class=" col-lg-10 col-sm-8 register-user">
+
+                            <form name="form" [formGroup]="contractFormGroup" (keydown.enter)="$event.preventDefault()">
+                                <div class="row">
+
+                                    <!-- Contract Title -->
+                                    <div class="col-md-6">
+                                        <mat-form-field class="full-width">
+                                            <input matInput maxlength="50" placeholder="Contract Title" name="contractTitle" [(ngModel)]="contract.contractTitle" formControlName="contractTitle"
+                                                required trim>
+                                            <mat-hint align="end">{{contract?.contractTitle?.length || 0}}/50</mat-hint>
+                                            <mat-error *ngIf="contractFormGroup.controls['contractTitle'].touched && contractFormGroup.controls['contractTitle'].errors?.required">
+                                                Contract Title is
+                                                <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <!-- Contract Type -->
+                                    <div class="col-md-6">
+                                        <mat-form-field class="full-width">
+                                            <mat-select placeholder="Contract Type" name="contractTypeId" [(ngModel)]="contract.contractTypeId" formControlName="contractType"
+                                                (change)="onContractTypeFocusOut()" required>
+                                                <mat-option>None</mat-option>
+                                                <mat-option *ngFor="let type of contractTypes" [value]="type.id">
+                                                    {{ type.contractTypeName }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="contractFormGroup.controls['contractType'].touched && contractFormGroup.controls['contractType'].errors?.required">
+                                                Contract Type is
+                                                <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <!-- Contract Price -->
+                                    <div class="col-md-6">
+
+                                        <mat-form-field class="full-width">
+                                            <input matInput type="number" placeholder="Contract Price" name="contractPrice" [(ngModel)]="contract.contractPrice" formControlName="contractPrice"
+                                                required>
+                                            <!-- <mat-hint align="end">{{contract?.contractRenewalIntimation?.length || 0}}/50</mat-hint> -->
+                                            <mat-error *ngIf="contractFormGroup.controls['contractPrice'].touched && contractFormGroup.controls['contractPrice'].errors?.required">
+                                                Contract Price is
+                                                <strong>required</strong>
+                                            </mat-error>
+                                            <mat-error *ngIf="contractFormGroup.controls['contractPrice'].touched && contractFormGroup.controls['contractPrice'].errors?.min">
+                                                Contract Price should not be 0
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <!-- Currency -->
+                                    <div class="col-md-6">
+                                        <mat-form-field class="full-width">
+                                            <mat-select placeholder="Select Currency" formControlName="currency" [(ngModel)]="contract.currencyId" (change)="onCurrencyFocusOut()"
+                                                required>
+                                                <mat-option>None</mat-option>
+                                                <mat-option *ngFor="let currency of currencies" [value]="currency.id ">
+                                                    {{ currency.displayName }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <!-- <mat-error *ngIf="formRegister.controls['caseNatureId'].errors?.required">
+                                                            Case Nature is <strong>required</strong>
+                                                        </mat-error> -->
+                                            <!-- <mat-hint class="unsuccessful" *ngIf="!isCaseNatureValid">
+                                                            Case Nature is not <strong>available</strong>
+                                                        </mat-hint> -->
+                                        </mat-form-field>
+                                    </div>
+
+                                    <!-- Start Date -->
+                                    <div class="col-md-6">
+                                        <mat-form-field class="full-width">
+                                            <input matInput [matDatepicker]="picker1" placeholder="Start Date" name="contractStartDate" [(ngModel)]="contract.contractStartDate"
+                                                formControlName="contractStartDate" (dateChange)="dateChanged($event, 'startDate')"
+                                                readonly required>
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-error *ngIf="contractFormGroup.controls['contractStartDate'].touched && contractFormGroup.controls['contractStartDate'].errors?.required">
+                                                Start Date is
+                                                <strong>required</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <!-- Expiry Date -->
+                                    <div class="col-md-6">
+                                        <mat-form-field class="full-width">
+                                            <input matInput [matDatepicker]="picker" placeholder="Expiry Date" name="contractExpiryDate" [(ngModel)]="contract.contractExpiryDate"
+                                                formControlName="contractExpiryDate" (dateChange)="dateChanged($event, 'expiryDate')"
+                                                readonly required>
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                            <mat-error *ngIf="contractFormGroup.controls['contractExpiryDate'].touched && contractFormGroup.controls['contractExpiryDate'].errors?.required">
+                                                Expiry Date is
+                                                <strong>required</strong>
+                                            </mat-error>
+                                            <mat-error *ngIf="contractFormGroup.controls['contractExpiryDate'].errors?.minDate">
+                                                Expiry Date must be greater than Start Date
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <!-- On Recurring -->
+                                    <div class="col-md-12" *ngIf="contract.contractType && contract.contractType.contractTypeCode == 'recurring'">
+                                        <div class="row">
+
+                                            <!-- Contract Renewal Intimation -->
+                                            <div class="col-md-6">
+
+                                                <mat-form-field class="full-width">
+                                                    <input matInput type="number" placeholder="Contract Renewal Intimation (days - before)" name="contractRenewalIntimation"
+                                                        [(ngModel)]="contract.contractRenewalIntimation" formControlName="contractRenewalIntimation"
+                                                        required>
+                                                    <!-- <mat-hint align="end">{{contract?.contractRenewalIntimation?.length || 0}}/50</mat-hint> -->
+                                                    <mat-error *ngIf="contractFormGroup.controls['contractRenewalIntimation'].touched && contractFormGroup.controls['contractRenewalIntimation'].errors?.required">
+                                                        Contract Renewal Intimation is
+                                                        <strong>required</strong>
+                                                    </mat-error>
+                                                    <mat-error *ngIf="contractFormGroup.controls['contractRenewalIntimation'].errors?.minIntimation">
+                                                        Contract Renewal Intimation should not be greater than Difference Date
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- Contract Renewal Price Percentage -->
+                                            <div class="col-md-6">
+
+                                                <mat-form-field class="full-width">
+                                                    <input matInput type="number" placeholder="Contract Renewal Price Percentage" name="contractRenewalPricePercentage" [(ngModel)]="contract.contractRenewalPricePercentage"
+                                                        formControlName="contractRenewalPricePercentage">
+                                                    <!-- <mat-hint align="end">{{contract?.contractRenewalPricePercentage?.length || 0}}/50</mat-hint> -->
+                                                    <mat-error *ngIf="contractFormGroup.controls['contractRenewalPricePercentage'].touched && contractFormGroup.controls['contractRenewalPricePercentage'].errors?.required">
+                                                        Contract Renewal Price Percentage is
+                                                        <strong>required</strong>
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Contract Description -->
+                                    <div class="col-md-12">
+                                        <mat-form-field class="full-width">
+                                            <textarea matInput placeholder="Contract Description" name="contractDescription" [(ngModel)]="contract.contractDescription"
+                                                formControlName="contractDescription" maxlength="4000" matTextareaAutosize matAutosizeMinRows="3"
+                                                matAutosizeMaxRows="15" trim></textarea>
+                                            <mat-hint align="end">{{contract?.contractDescription?.length || 0}}/4000</mat-hint>
+                                        </mat-form-field>
+                                    </div>
+
+
+
+                                    <!-- Select Party (External Employee) -->
+                                    <div class="col-md-6">
+                                        <mat-form-field class="full-width">
+                                            <mat-select placeholder="Select Party" name="externalPartyId" [(ngModel)]="contract.externalPartyId" formControlName="party"
+                                                required>
+                                                <mat-option>None</mat-option>
+                                                <mat-option *ngFor="let emp of employees" [value]="emp.id">
+                                                    {{ emp.firstName }} {{ emp?.lastName }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <!-- <mat-error>
+                                                    Party is
+                                                    <strong>required</strong>
+                                                </mat-error> -->
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <contract-upload [attachments]="contract.contractDocuments" [showUpload]="'true'" [index]="$index" (attachmentIds)="docUploaded($event)">
+                                        </contract-upload>
+                                        <!--        <button mat-raised-button color="danger" type="button" *ngIf="bailObject.bailDocs.length >0" (click)="remove($index)">
+                                        Remove File </button> -->
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <!-- Contract Tag -->
+                                <div class="row">
+                                    <!-- Contract Tag -->
+                                    <div class="col-sm-12">
+                                        <h2>Contract Tag</h2>
+                                        <div class="row">
+                                            <!-- New Contract Tag -->
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <mat-form-field class="full-width">
+                                                            <input matInput maxlength="50" placeholder="Add New" [(ngModel)]="contractTag.tagName" [ngModelOptions]="{standalone: true}"
+                                                                trim>
+                                                            <mat-hint align="end">{{contractTag?.tagName?.length || 0}}/50</mat-hint>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <span matTooltipPosition="above" matTooltip="{{!addTagPermission ? 'Dont have permission' : (isAddNewTag ? 'Processing' : 'Add!' ) }}">
+                                                            <button mat-raised-button color="primary" [disabled]="!addTagPermission || isAddNewTag" (click)="addContractTag()">Add </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Contract Tag list -->
+                                            <div class="col-md-12">
+                                                <!-- <mat-card class="management-card"> -->
+                                                <div class="clearfix">
+                                                    <!-- <mat-card-title>Select</mat-card-title> -->
+                                                    <h2>Select</h2>
+                                                    <div>
+                                                        <mat-chip-list>
+                                                            <mat-chip *ngFor='let ct of contractTagList' (click)="onClickTag(ct)" [ngClass]="ct.selected == true  ? 'mat-primary mat-chip-selected': 'mat-primary'">
+                                                                {{ct.tagName}}
+                                                            </mat-chip>
+                                                        </mat-chip-list>
+                                                    </div>
+                                                </div>
+                                                <!-- </mat-card> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <!-- Clubbed Contract -->
+                                <div class="row ptm pbm">
+
+                                    <div class="col-sm-12">
+                                        <h2>Clubbed Contract</h2>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div>
+                                                    <mat-checkbox [(ngModel)]="contract.isClubbedContract" [ngModelOptions]="{standalone: true}" (change)="changeClubbedContract()">
+                                                        Yes </mat-checkbox>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="col-lg-12" *ngIf="contract.isClubbedContract">
+                                                <!-- <div class="col-lg-12" *ngIf="false"> -->
+
+                                                <!-- <mat-form-field class="mvl full-width">
+                                                    <input type="serach" matInput [(ngModel)]="filterCC" [ngModelOptions]="{standalone: true}" (keyup)="applyFilter($event.target.value,'cc')"
+                                                        placeholder="Search">
+                                                    <mat-icon matSuffix>search</mat-icon>
+                                                </mat-form-field> -->
+
+                                                <div class="col-lg-12">
+                                                    <mat-table #table1 [dataSource]="dataSourceCC" class="table table-responsive soc-table">
+
+                                                        <!-- Serial No -->
+                                                        <ng-container matColumnDef="sNo">
+                                                            <mat-header-cell *matHeaderCellDef> S.No </mat-header-cell>
+                                                            <mat-cell *matCellDef="let u; let i = index;"> {{i + 1}} </mat-cell>
+                                                        </ng-container>
+
+                                                        <ng-container matColumnDef="title">
+                                                            <mat-header-cell *matHeaderCellDef>Title </mat-header-cell>
+                                                            <mat-cell *matCellDef="let u">
+                                                                <!-- <a [routerLink]="['/contract/edit/',u.id]">{{u?.contractTitle}}</a> -->
+                                                                {{u?.contractTitle}}
+                                                            </mat-cell>
+                                                        </ng-container>
+
+                                                        <ng-container matColumnDef="type">
+                                                            <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+                                                            <mat-cell *matCellDef="let u">
+                                                                {{u?.contractType?.contractTypeName}}
+                                                            </mat-cell>
+                                                        </ng-container>
+
+
+                                                        <ng-container matColumnDef="action">
+                                                            <mat-header-cell *matHeaderCellDef>
+                                                            </mat-header-cell>
+                                                            <mat-cell *matCellDef="let row" (click)="selectionCC.toggle(row)">
+                                                                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionCC.toggle(row) : null" [checked]="selectionCC.isSelected(row)">
+                                                                </mat-checkbox>
+                                                            </mat-cell>
+                                                        </ng-container>
+
+                                                        <mat-header-row *matHeaderRowDef="displayedColumnsCC"></mat-header-row>
+                                                        <!-- <mat-row *matRowDef="let row; columns: displayedColumnsDA;" (click)="selectionDA.toggle(row)"></mat-row> -->
+                                                        <mat-row *matRowDef="let row; columns: displayedColumnsCC;"></mat-row>
+                                                    </mat-table>
+
+                                                    <div class="" *ngIf="(dataSourceCC.data.length == 0 || dataSourceCC.filteredData.length == 0) && !isSpinnerCC">
+                                                        <div class="snipet download-btn">
+                                                            <button (click)="refreshList('cc')" mat-raised-button> 
+                                                                <i class="material-icons">refresh</i> No Data Found
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <spinner [visible]='isSpinnerCC'></spinner>
+                                                    <!-- <mat-paginator #paginatorCC [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                                                                                                </mat-paginator> -->
+                                                    <mat-paginator #paginatorCC [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                                                        (page)="pageEvent = pageChangeEvent($event)">
+                                                    </mat-paginator>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="text-right button-spacing">
+                                    <!-- <button color="primary" mat-raised-button [disabled]="isSubmitted" (click)="contractId? openConfirmDialog('update') : openConfirmDialog('save')">Save</button> -->
+
+                                    <!-- Add -->
+                                    <span *ngIf="!contractId" matTooltipPosition="above" matTooltip="{{!addPermission ? 'Dont have permission' : ( isSubmitted ? 'Processing' : 'Save!' ) }}">
+                                        <button color="primary" mat-raised-button [disabled]="!addPermission || isSubmitted" (click)="openConfirmDialog('save')">Save</button>
+                                    </span>
+
+                                    <!-- Edit -->
+                                    <span *ngIf="contractId" matTooltipPosition="above" matTooltip="{{!updatePermission ? 'Dont have permission' : ( isSubmitted ? 'Processing' : 'Edit!' ) }}">
+                                        <button color="primary" mat-raised-button [disabled]="!updatePermission || isSubmitted" (click)="openConfirmDialog('update')">Update</button>
+                                    </span>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </mat-card>
+        </div>
+    </div>
+</section>

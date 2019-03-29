@@ -1,0 +1,11 @@
+<!-- <fancy-image-uploader [options]="options" (onUpload)="onUpload($event)" ></fancy-image-uploader>
+
+        -->
+
+<div class="profile-img">
+    <div class="change-profile-pic" (click)='clickToUpload.click()'>
+        <input style="display : none" type="file" (change)="onFileSelected($event)" #clickToUpload>
+        <img src="{{profilePic}}" alt="profile-pic" >
+    </div>
+</div>
+<!-- <button type="button" (click)="onUpload()">Upload</button> -->

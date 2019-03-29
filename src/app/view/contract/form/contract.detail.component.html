@@ -1,0 +1,380 @@
+<!-- <secure-header *ngIf="isLogin"></secure-header> -->
+<section class="content-block">
+    <div class="row align-item-center">
+        <div class="col-lg-12 col-md-12 col-xs-12 tr-campaign campaign-detail case">
+            <mat-card class="two-row-card">
+                <div class="tr-sec-box">
+
+                    <mat-card-title>Contract Detail</mat-card-title>
+                    <h2>Basic Details</h2>
+                    <div class="row align-item-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 campaing-details">
+                            <div class="row align-item-center">
+
+                                <!-- Contract Title -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Contract Title</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.contractTitle || 'NA' }}</span>
+                                </div>
+
+                                <!-- Contract Type -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Contract Type</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>
+                                        {{ contract?.contractType?.contractTypeName || 'NA' }}
+                                    </span>
+                                </div>
+
+                                <!-- Contract Price -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Contract Price</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.contractPrice || 'NA' }}</span>
+                                </div>
+
+                                <!-- Currency -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Currency</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.currency?.displayName || 'NA' }}</span>
+                                </div>
+
+                                <!-- Start Date -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Start Date</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.contractStartDate | date:'dd-MMM-yyyy' }}</span>
+                                </div>
+
+                                <!-- Expiry Date -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Expiry Date</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.contractExpiryDate | date:'dd-MMM-yyyy' }}</span>
+                                </div>
+                            </div>
+
+
+                            <div class="row align-item-center" *ngIf="contract.contractType && contract.contractType.contractTypeCode == 'recurring'">
+                                <!-- Contract Renewal Intimation -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Contract Renewal Intimation (days - before)</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.contractRenewalIntimation || 'NA' }} </span>
+                                </div>
+
+                                <!-- Contract Renewal Price Percentage -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Contract Renewal Price Percentage</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.contractRenewalPricePercentage || 'NA' }} </span>
+                                </div>
+                            </div>
+
+                            <!-- Contract Description -->
+                            <div class="row align-item-center">
+                                <div class="col-lg-3 pvs">
+                                    <label>Contract Description</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <p class="first-part" *ngIf="!isCHNPartOne">{{ contract?.contractDescription?.substr(0,500) + (contract?.contractDescription?.length
+                                        > 500 ? "..." : "") || "NA"}}</p>
+                                    <p class="second-part" *ngIf="isCHNPartOne">{{ contract?.contractDescription }}</p>
+                                    <button mat-button *ngIf="contract?.contractDescription?.length > 500" (click)="isCHNPartOne = !isCHNPartOne"> {{ isCHNPartOne ? "Show Less" : "Show More" }}</button>
+                                </div>
+                            </div>
+
+
+                            <div class="row align-item-center">
+                                <!-- Party -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Party</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.externalParty?.firstName + ' ' + contract?.externalParty?.lastName }}</span>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Status</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>{{ contract?.isContractTerminated ? 'Terminated' : 'On Going' }}</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+                    <h2>Contract Tags</h2>
+                    <div class="row align-item-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 campaing-details">
+                            <div class="row align-item-center">
+                                <div class="col-lg-3 pvs">
+                                    <label>Tags</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <mat-chip-list>
+                                        <mat-chip *ngFor='let ct of contract?.contractTags' [ngClass]="'mat-primary mat-chip-selected'" selected>
+                                            <!-- <mat-chip *ngFor='let rt of contract?.contractTags' class="mat-primary mat-chip-selected"> -->
+                                            {{ct.tagName}}
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                    <span *ngIf="contract && contract.contractTags.length == 0">No contract tag selected</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h2>Attached Document(s)</h2>
+                    <div class="row align-item-center">
+                        <div class="col-lg-10 col-md-10 col-sm-10 campaing-details">
+                            <div class="row align-item-center">
+
+                                <!-- Case System No -->
+                                <div class="col-lg-3 pvs">
+                                    <label>Attachments</label>
+                                </div>
+                                <div class="col-lg-9 pvs">
+                                    <span>
+                                        <contract-upload [attachments]="contract.contractDocuments" [showUpload]="false" [index]="$index" (attachmentIds)="docUploaded($event)">
+                                        </contract-upload>
+                                        </span>
+                                    <span *ngIf="contract?.documents && contract.documents.length < 1">No Document(s) Found</span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h2>Clubbed Contract</h2>
+                    <div class="row align-item-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12 campaing-details">
+                            <div class="row align-item-center">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="filter-con">
+                                        <mat-form-field>
+                                            <input matInput [(ngModel)]="filter" [ngModelOptions]="{standalone: true}" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="snipet download-btn">
+                                        <!-- <button mat-raised-button color="primary" [routerLink]="['/case/c/create']" [disabled]="!addPermission"> Add New <i class="material-icons">add</i></button> -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <mat-table #table [dataSource]="dataSourceCC" class="table table-responsive soc-table">
+
+                                        <!-- S no -->
+                                        <ng-container matColumnDef="sNo">
+                                            <mat-header-cell *matHeaderCellDef> S.No </mat-header-cell>
+                                            <mat-cell *matCellDef="let u ; let i = index">
+                                                <a>{{i + 1}}</a>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Title Column -->
+                                        <ng-container matColumnDef="title">
+                                            <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+                                            <mat-cell *matCellDef="let u">
+                                                <a [routerLink]="['/contract/detail/',u.id]">{{ u?.contractTitle }}</a>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Party Column -->
+                                        <ng-container matColumnDef="party">
+                                            <mat-header-cell *matHeaderCellDef> Party </mat-header-cell>
+                                            <mat-cell *matCellDef="let u">
+                                                {{ u?.externalParty?.firstName + ' ' + u?.externalParty?.lastName }}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Type Column -->
+                                        <ng-container matColumnDef="type">
+                                            <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+                                            <mat-cell *matCellDef="let u"> {{ u?.contractType?.contractTypeName }} </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Start Date Column -->
+                                        <ng-container matColumnDef="start">
+                                            <mat-header-cell *matHeaderCellDef> Start Date </mat-header-cell>
+                                            <mat-cell *matCellDef="let u">
+                                                {{u?.contractStartDate | date:'dd-MMM-yyyy'}}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Expiry Date Column -->
+                                        <ng-container matColumnDef="expiry">
+                                            <mat-header-cell *matHeaderCellDef> Expiry Date </mat-header-cell>
+                                            <mat-cell *matCellDef="let u"> {{ u?.contractExpiryDate | date:'dd-MMM-yyyy' }} </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Action Column -->
+                                        <!-- <ng-container matColumnDef="action">
+                                            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                                            <mat-cell *matCellDef="let u">
+                                                <div class="btn-group" role="group">
+                                                    <span matTooltipPosition="above" matTooltip="{{!proceedingHistoryPagePermission ? 'Dont have permission' : 'View History' }}">
+                                                        <button type="button" class="edit-btn" [disabled]="!proceedingHistoryPagePermission" mat-raised-button [routerLink]="['/lawyerPanel/lp/case/proceeding/history/', u.id]">            
+                                                            <i class="material-icons">remove_red_eye</i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </mat-cell>
+                                        </ng-container> -->
+
+                                        <mat-header-row *matHeaderRowDef="displayedColumnsCC"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: displayedColumnsCC;"></mat-row>
+                                    </mat-table>
+
+                                    <div class="" *ngIf="(dataSourceCC?.data.length == 0 || dataSourceCC?.filteredData.length == 0) && !isSpinner">
+                                        <div class="snipet download-btn">
+                                            <button (click)="refreshList()" [disabled]="true" mat-raised-button> 
+                                                        <!-- <i class="material-icons">refresh</i>  -->
+                                                        No Data Found
+                                                    </button>
+                                        </div>
+                                    </div>
+                                    <spinner [visible]='isSpinner'></spinner>
+
+                                    <mat-paginator #paginatorCC [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                                    </mat-paginator>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h2>Contract History</h2>
+                    <div class="row align-item-center">
+                        <div class="col-lg-12 col-md-12 col-sm-12 campaing-details">
+                            <div class="row align-item-center">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="filter-con">
+                                        <mat-form-field>
+                                            <input matInput [(ngModel)]="filter" [ngModelOptions]="{standalone: true}" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="snipet download-btn">
+                                        <!-- <button mat-raised-button color="primary" [routerLink]="['/case/c/create']" [disabled]="!addPermission"> Add New <i class="material-icons">add</i></button> -->
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <mat-table #table [dataSource]="dataSourceCH" class="table table-responsive soc-table">
+
+                                        <!-- S no -->
+                                        <ng-container matColumnDef="sNo">
+                                            <mat-header-cell *matHeaderCellDef> S.No </mat-header-cell>
+                                            <mat-cell *matCellDef="let u ; let i = index">
+                                                <a>{{i + 1}}</a>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- title Column -->
+                                        <ng-container matColumnDef="title">
+                                            <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+                                            <mat-cell *matCellDef="let u">
+                                                <!-- <a [routerLink]="['/contract/detail/',u.id]">{{ u?.contractTitle }}</a> -->
+                                                {{ u?.contractTitle }}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Party Column -->
+                                        <ng-container matColumnDef="party">
+                                            <mat-header-cell *matHeaderCellDef> Party </mat-header-cell>
+                                            <mat-cell *matCellDef="let u">
+                                                {{ u?.externalParty?.firstName + ' ' + u?.externalParty?.lastName }}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Type Column -->
+                                        <ng-container matColumnDef="type">
+                                            <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+                                            <mat-cell *matCellDef="let u"> {{ u?.contractType?.contractTypeName }} </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Start Date Column -->
+                                        <ng-container matColumnDef="start">
+                                            <mat-header-cell *matHeaderCellDef> Start Date </mat-header-cell>
+                                            <mat-cell *matCellDef="let u">
+                                                {{u?.contractStartDate | date:'dd-MMM-yyyy'}}
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Expiry Date Column -->
+                                        <ng-container matColumnDef="expiry">
+                                            <mat-header-cell *matHeaderCellDef> Expiry Date </mat-header-cell>
+                                            <mat-cell *matCellDef="let u"> {{ u?.contractExpiryDate | date:'dd-MMM-yyyy' }} </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Action Column -->
+                                        <ng-container matColumnDef="action">
+                                            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                                            <mat-cell *matCellDef="let u">
+                                                <div class="btn-group" role="group">
+                                                    <!-- View Detail -->
+                                                    <!-- <span matTooltipPosition="above" matTooltip="{{!proceedingHistoryPagePermission ? 'Dont have permission' : 'View History' }}">
+                                                        <button type="button" class="edit-btn" [disabled]="!proceedingHistoryPagePermission" mat-raised-button [routerLink]="['//', u.id]">            
+                                                            <i class="material-icons">remove_red_eye</i>
+                                                        </button>
+                                                    </span> -->
+
+                                                    <!-- View History -->
+                                                    <span matTooltipPosition="above" matTooltip="View History!">
+                                                        <button type="button" class="edit-btn" mat-raised-button (click)="viewHistory(u)">
+                                                            <!-- View History -->
+                                                            <i class="material-icons">rate_review</i>
+                                                        </button>  
+                                                    </span>
+                                                </div>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <mat-header-row *matHeaderRowDef="displayedColumnsCH"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: displayedColumnsCH;"></mat-row>
+                                    </mat-table>
+
+                                    <div class="" *ngIf="(dataSourceCH?.data.length == 0 || dataSourceCH?.filteredData.length == 0) && !isSpinner">
+                                        <div class="snipet download-btn">
+                                            <button (click)="refreshList()" [disabled]="true" mat-raised-button> 
+                                                        <!-- <i class="material-icons">refresh</i>  -->
+                                                        No Data Found
+                                                    </button>
+                                        </div>
+                                    </div>
+                                    <spinner [visible]='isSpinner'></spinner>
+
+                                    <mat-paginator #paginatorCH [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                                    </mat-paginator>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</section>

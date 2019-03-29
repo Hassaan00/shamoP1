@@ -1,0 +1,42 @@
+<!-- <secure-header *ngIf="isLogin"></secure-header> -->
+
+<section class="content-block">
+
+    <mat-accordion class="example-headers-align" multi="true">
+        <div class="row">
+
+
+
+            <!-- manage region -->
+            <div class="col-sm-12">
+                <mat-expansion-panel [expanded]="step[0].selected" hideToggle="true" *ngIf="regionListPermission || addRegionPermission">
+                    <mat-expansion-panel-header (click)="step[0].selected = !step[0].selected">
+                        <mat-panel-title>
+                            <span class="expansion-panel-heading">Manage Region</span>
+                            <mat-icon>{{ step[0].selected ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <region-list></region-list>
+                </mat-expansion-panel>
+            </div>
+
+            <!-- manage branch -->
+            <div class="col-sm-12">
+                <mat-expansion-panel [expanded]="step[1].selected" hideToggle="true" *ngIf="branchListPermission || addBranchPermission">
+                    <mat-expansion-panel-header (click)="step[1].selected = !step[1].selected">
+                        <mat-panel-title>
+                            <span class="expansion-panel-heading">Manage Branch</span>
+                            <mat-icon>{{ step[1].selected ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <branch-list></branch-list>
+                </mat-expansion-panel>
+            </div>
+
+
+        </div>
+    </mat-accordion>
+
+</section>

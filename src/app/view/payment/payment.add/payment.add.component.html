@@ -1,0 +1,469 @@
+<!-- <secure-header *ngIf="isLogin">
+</secure-header> -->
+<section class="content-block">
+    <div class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="caption-main">
+                    <!-- <mat-card-title>Register a User</mat-card-title> -->
+                </div>
+            </div>
+            <div class="col-md-10">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-item-center">
+        <div class="col-lg-12 col-md-12 col-xs-12 tr-campaign case">
+            <mat-card class="two-row-card mat-card">
+
+
+                <div class="tr-sec-box">
+                    <div class="row align-item-center">
+                        <mat-progress-bar *ngIf='isSubmitted' color="warn" mode="indeterminate"></mat-progress-bar>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <mat-card-title class="mat-card-title">Expense Section</mat-card-title>
+
+                        </div>
+                        <div class=" col-lg-10 col-sm-8 register-user">
+                            <!-- <form [formGroup]="formRegister" autocomplete="on" (ngSubmit)=onSubmit(formRegister.value)> -->
+                            <form [formGroup]="formRegister" autocomplete="on">
+                                <div class="row">
+
+                                    <!-- Case -->
+                                    <!-- onCaseFocusOut(formRegister.value.type) -->
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-field">
+                                            <mat-form-field class="full-width">
+                                                <mat-select formControlName="caseId" placeholder="Select Case " [(ngModel)]="newPayment.caseBasicId" (click)="onCaseClick()"
+                                                    (change)="onCaseFocusOut()" required [disabled]="isPayOrderShow">
+                                                    <mat-option>None</mat-option>
+                                                    <mat-option *ngFor="let case of caseList" [value]="case.id ">
+                                                        {{ case.caseSystemNumber }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="formRegister.controls['caseId'].errors?.required">
+                                                    Case is
+                                                    <strong>required</strong>
+                                                </mat-error>
+                                                <mat-hint class="unsuccessful" *ngIf="!isCaseValid">
+                                                    Case is not
+                                                    <strong>available</strong>
+                                                </mat-hint>
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+
+                                    <!-- [ngModelOptions]="{standalone: true}" -->
+                                    <div class="col-md-6">
+                                        <div class="form-field">
+
+                                            <mat-form-field class="full-width">
+                                                <input type="hidden" placeholder="Select Case" formControlName="caseId" [(ngModel)]="newPayment.caseBasicId" (click)="onCaseClick()"
+                                                    readonly required>
+
+                                                <input matInput type="text" placeholder="Case" value="{{ newPayment?.caseBasic?.caseName || 'NA' }}" (click)="onCaseClick()"
+                                                    readonly [disabled]="isPayOrderShow">
+
+                                                <mat-error *ngIf="formRegister.controls['caseId'].errors?.required">
+                                                    Case is
+                                                    <strong>required</strong>
+                                                </mat-error>
+                                                <mat-hint class="unsuccessful">
+                                                    click to select Case
+                                                </mat-hint>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Expense Nature -->
+
+                                    <div class="col-md-6">
+                                        <div class="form-field">
+                                            <!-- onExpenseNatureFocusOut(formRegister.value.type) -->
+                                            <mat-form-field class="full-width">
+                                                <mat-select formControlName="expenseNatureId" placeholder="Select Expense Nature " [(ngModel)]="newPayment.expenseNatureId"
+                                                    (change)="onExpenseNatureFocusOut()" required [disabled]="isPayOrderShow">
+                                                    <mat-option>None</mat-option>
+                                                    <mat-option *ngFor="let expenseNature of expenseNatureList" [value]="expenseNature.id ">
+                                                        {{ expenseNature.expenseNature }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="formRegister.controls['expenseNatureId'].errors?.required">
+                                                    Expense Nature is
+                                                    <strong>required</strong>
+                                                </mat-error>
+                                                <mat-hint class="unsuccessful" *ngIf="!isCaseValid">
+                                                    Expense Nature is not
+                                                    <strong>available</strong>
+                                                </mat-hint>
+                                                <!-- <mat-hint *ngIf="auctionInfo.id!==0">
+                                                    Auction No.:
+                                                    <strong>{{auctionInfo?.auctionSystemNumber}}</strong>, Fee:
+                                                    <strong>{{auctionInfo?.auctionFee}} {{auctionInfo?.currencyName}}</strong>
+                                                </mat-hint> -->
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Court -->
+
+                                    <div class="col-md-12" *ngIf="newPayment.expenseNature.expenseNatureCode=='court_fee'">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-field">
+
+                                                    <mat-form-field class="full-width">
+                                                        <mat-select formControlName="caseCourtId" placeholder="Select Court " [(ngModel)]="newPayment.caseCourtId" (focusout)="onCourtFocusOut(formRegister.value.type)"
+                                                            required [disabled]="isPayOrderShow">
+                                                            <mat-option>None</mat-option>
+                                                            <mat-option *ngFor="let caseCourt of caseCourtList" [value]="caseCourt.id ">
+                                                                {{ caseCourt.court.courtName }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                        <mat-error *ngIf="formRegister.controls['caseCourtId'].errors?.required">
+                                                            Court is
+                                                            <strong>required</strong>
+                                                        </mat-error>
+                                                        <mat-hint class="unsuccessful" *ngIf="!isCourtValid">
+                                                            Court is not
+                                                            <strong>available</strong>
+                                                        </mat-hint>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- LawFirm -->
+
+                                    <div class="col-md-12" *ngIf="newPayment.expenseNature.expenseNatureCode=='lawfirm_fee'">
+                                        <div class="row">
+
+                                            <!-- Law Firm -->
+                                            <div class="col-md-12">
+                                                <div class="form-field">
+
+                                                    <mat-form-field class="full-width">
+                                                        <mat-select formControlName="lawFirmId" placeholder="Select Law Firm " [(ngModel)]="newPayment.lawFirmId" (change)="onLawFirmFocusOut(formRegister.value.type)"
+                                                            required [disabled]="isPayOrderShow">
+                                                            <mat-option>None</mat-option>
+                                                            <mat-option *ngFor="let lawFirm of lawFirmList" [value]="lawFirm.lawFirmId ">
+                                                                {{ lawFirm.lawFirm.lawFirmName }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                        <mat-error *ngIf="formRegister.controls['lawFirmId'].errors?.required">
+                                                            lawFirm is
+                                                            <strong>required</strong>
+                                                        </mat-error>
+                                                        <mat-hint class="unsuccessful" *ngIf="!isLawFirmValid">
+                                                            lawFirm is not
+                                                            <strong>available</strong>
+                                                        </mat-hint>
+                                                    </mat-form-field>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Payment Detail -->
+                                            <div class="col-md-12">
+                                                <div class="form-field">
+
+                                                    <h2>Payment Detail</h2>
+
+                                                    <!-- <mat-form-field class="full-width"> -->
+                                                    <mat-radio-group class="example-radio-group" [(ngModel)]="newPayment.caseRecommendLawFirmPaymentTermDetailId" (change)="onPaymentDetailFocusOut()"
+                                                        formControlName="lawFirmPaymentDetailId" [disabled]="isPayOrderShow">
+                                                        <mat-list role="list">
+                                                            <mat-list-item role="listitem" *ngFor="let ptd of lawFirmPaymentTermDetails">
+
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">
+                                                                            <mat-radio-button class="example-radio-button " [value]="ptd.milestoneTableId">
+
+                                                                            </mat-radio-button>
+                                                                        </div>
+                                                                        <div class="col-md-3" *ngIf="ptd?.milestoneName">{{ ptd?.milestoneName }}</div>
+                                                                        <div class="col-md-3" *ngIf="!(ptd?.milestoneName)">{{ ptd?.customMilestone }}</div>
+                                                                        <div class="col-md-3">{{ ptd?.percentage || 0 }} %</div>
+                                                                        <div class="col-md-3">{{ ptd?.value | number:'1.0-2' }}/=</div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </mat-list-item>
+                                                            <div *ngIf="lawFirmPaymentTermDetails.length == 0"> No detail found</div>
+                                                        </mat-list>
+                                                    </mat-radio-group>
+                                                    <!-- </mat-form-field> -->
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Auction -->
+
+                                    <div class="col-md-12" *ngIf="newPayment.expenseNature.expenseNatureCode=='auction_fee'">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-field">
+
+                                                    <mat-form-field class="full-width">
+                                                        <!-- matTooltip='Firm Code should be a combination of alphanumeric characters' -->
+                                                        <!-- <input matInput #input maxlength="50" placeholder="Auction No" [(ngModel)]="auctionInfo.auctionSystemNumber" [ngModelOptions]="{standalone: true}"
+                                                            [disabled]="true"> -->
+
+                                                        <mat-select formControlName="auctionId" placeholder="Select Auction" [(ngModel)]="newPayment.auctionScheduleId" (change)="onAuctionFocusOut(formRegister.value.type)"
+                                                            required [disabled]="isPayOrderShow">
+                                                            <mat-option>None</mat-option>
+                                                            <mat-option *ngFor="let auction of aucScheduleList" [value]="auction.id ">
+                                                                {{ auction?.auctionSystemNumber }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                        <mat-error *ngIf="formRegister.controls['auctionId'].errors?.required">
+                                                            Auction is
+                                                            <strong>required</strong>
+                                                        </mat-error>
+                                                        <mat-hint class="unsuccessful" *ngIf="!isAuctionValid">
+                                                            Auction is not
+                                                            <strong>available</strong>
+                                                        </mat-hint>
+                                                    </mat-form-field>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="form-field">
+
+                                                            <mat-form-field class="full-width">
+                                                                <!-- <input matInput #input maxlength="50" placeholder="Auction Fee" [(ngModel)]="auctionInfo.auctionFee" [ngModelOptions]="{standalone: true}"
+                                                                    [disabled]="true"> -->
+                                                                <input matInput #input maxlength="50" placeholder="Auction Fee" value="{{ auctionInfo?.auctionFee || 0 | number:'1.0-2'}}/="
+                                                                    [disabled]="true">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-field">
+
+                                                            <mat-form-field class="full-width">
+                                                                <input matInput #input maxlength="50" placeholder="Currency" [(ngModel)]="auctionInfo.currency.displayName" [ngModelOptions]="{standalone: true}"
+                                                                    [disabled]="true">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Expense Amount -->
+
+                                    <div class="col-md-6">
+                                        <div class="form-field">
+
+                                            <mat-form-field class="full-width">
+                                                <!-- matTooltip='Firm Code should be a combination of alphanumeric characters' -->
+                                                <input formControlName="expenseAmount" type="number" min="0" max="999999999999" matInput #input maxlength="50" placeholder="Expense Amount"
+                                                    [(ngModel)]="newPayment.expenseAmount" (focusout)="onExpenseAmountFocusOut()"
+                                                    required [disabled]="isPayOrderShow">
+                                                <!-- <mat-hint align="end">{{newPayment.expenseAmount?.length || 0}}/50</mat-hint> -->
+                                                <mat-error *ngIf="formRegister.controls['expenseAmount'].touched && formRegister.controls['expenseAmount'].errors?.required">
+                                                    Expense Amount is
+                                                    <strong>required</strong>
+                                                </mat-error>
+                                                <mat-error *ngIf="formRegister.controls['expenseAmount'].errors?.notEqual">
+                                                    Expense Amount is not matched with Auction fee
+                                                </mat-error>
+                                                <mat-error *ngIf="formRegister.controls['expenseAmount'].errors?.notEqualLf">
+                                                    Expense Amount is not matched with Law Firm fee
+                                                </mat-error>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Currency -->
+
+                                    <div class="col-md-6">
+                                        <div class="form-field">
+                                            <!-- onCurrencyFocusOut(formRegister.value.currencyId) -->
+                                            <mat-form-field class="full-width">
+                                                <mat-select formControlName="currencyId" placeholder="Select Currency" [(ngModel)]="newPayment.currencyId" (focusout)="onCurrencyFocusOut()"
+                                                    required [disabled]="isPayOrderShow">
+                                                    <mat-option>None</mat-option>
+                                                    <mat-option *ngFor="let currency of currencies" [value]="currency.id ">
+                                                        {{ currency.displayName }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="formRegister.controls['currencyId'].errors?.required">
+                                                    Currency is
+                                                    <strong>required</strong>
+                                                </mat-error>
+                                                <mat-hint class="unsuccessful" *ngIf="!isCurrencyValid">
+                                                    Currency is not
+                                                    <strong>available</strong>
+                                                </mat-hint>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- File -->
+
+                                    <div class="col-md-12">
+                                        <div class="form-field">
+                                            <h3>Document(s)</h3>
+                                            <file [caseId]="newPayment.caseBasicId" [attachments]="newPayment.documents" (attachmentIds)="attachID($event)" [showUpload]="!isPayOrderShow"></file>
+                                            <div *ngIf="newPayment.documents && newPayment.documents.length < 1 && isPayOrderShow"> No Document(s) Found </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- isPayOrderShow -->
+
+                                    <div class="col-md-12" *ngIf="isPayOrderShow">
+                                        <div class="row">
+
+                                            <!-- Pay Order No -->
+                                            <div class="col-md-6">
+                                                <div class="form-field">
+
+                                                    <mat-form-field class="full-width">
+                                                        <!-- matTooltip='Firm Code should be a combination of alphanumeric characters' -->
+                                                        <input formControlName="payOrderNo" matInput #input maxlength="50" placeholder="Pay Order No" [(ngModel)]="newPayment.payOrder"
+                                                            (focusout)="onPayOrderFocusOut()" required>
+                                                        <mat-hint align="end">{{newPayment.payOrder?.length || 0}}/50</mat-hint>
+                                                        <mat-error *ngIf="formRegister.controls['payOrderNo'].touched && formRegister.controls['payOrderNo'].errors?.required">
+                                                            Pay Order No is
+                                                            <strong>required</strong>
+                                                        </mat-error>
+                                                        <!-- <mat-error *ngIf="formRegister.controls['payOrderNo'].errors?.notAvailable">
+                                                        Pay Order No is not available
+                                                    </mat-error> -->
+                                                    </mat-form-field>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Dispatch Date -->
+                                            <div class="col-md-6">
+                                                <div class="form-field">
+
+                                                    <mat-form-field class="full-width">
+                                                        <!-- [max]="maxDate" [min]="minDate" -->
+                                                        <!-- formControlName="payOrderDispatchDate" -->
+                                                        <!-- [ngModelOptions]="{standalone: true}" -->
+                                                        <!-- #payOrderDispatchDate="ngModel" -->
+                                                        <input matInput [matDatepicker]="picker" (dateChange)="dateChanged($event,'dispatchDate')" placeholder="Choose Dispatch Date"
+                                                            name="payOrderDispatchDate" formControlName="payOrderDispatchDate"
+                                                            [(ngModel)]="newPayment.payOrderDispatchDate" readonly>
+                                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                        <mat-error *ngIf="formRegister.controls['payOrderDispatchDate'].errors?.required">
+                                                            Dispatch Date is
+                                                            <strong>required</strong>
+                                                        </mat-error>
+                                                    </mat-form-field>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Date of Pay-Order -->
+                                            <div class="col-md-6">
+                                                <div class="form-field">
+
+                                                    <mat-form-field class="full-width">
+                                                        <!-- [max]="maxDate" [min]="minDate" -->
+                                                        <!-- formControlName="payOrderDate" -->
+                                                        <!-- [ngModelOptions]="{standalone: true}" -->
+                                                        <!-- #dateOfBirth="ngModel" -->
+                                                        <input matInput [matDatepicker]="picker1" (dateChange)="dateChanged($event,'payOrderDate')" placeholder="Choose Date of Pay-Order"
+                                                            name="payOrderDate" formControlName="payOrderDate" [(ngModel)]="newPayment.payOrderDate"
+                                                            readonly>
+                                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker1></mat-datepicker>
+                                                        <mat-error *ngIf="formRegister.controls['payOrderDate'].errors?.required">
+                                                            Date of Pay-Order is
+                                                            <strong>required</strong>
+                                                        </mat-error>
+                                                    </mat-form-field>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Expense Description -->
+
+                                    <div class="col-md-12">
+                                        <div class="form-field">
+
+                                            <mat-form-field class="full-width">
+                                                <!-- matTooltip='Postal Address should be a combination of alphanumeric characters' -->
+                                                <textarea formControlName="expenseDescription" rows="1" matInput #input maxlength="100" placeholder="Expense Description"
+                                                    [(ngModel)]="newPayment.expenseDescription" (focusout)="onExpenseDescriptionFocusOut()"
+                                                    matInput required [disabled]="isPayOrderShow"></textarea>
+                                                <mat-hint align="end">{{newPayment.expenseDescription?.length || 0}}/100</mat-hint>
+                                                <mat-error *ngIf="formRegister.controls['expenseDescription'].touched && formRegister.controls['expenseDescription'].errors?.required">
+                                                    Expense Description is
+                                                    <strong>required</strong>
+                                                </mat-error>
+                                                <mat-error *ngIf="formRegister.controls['expenseDescription'].touched && formRegister.controls['expenseDescription'].errors?.pattern">
+                                                    Expense Description is
+                                                    <strong>invalid</strong>
+                                                </mat-error>
+                                                <!-- <mat-error *ngIf="formRegister.controls['firmCode'].errors?.notAvailable">
+                                                                Firm Code is not available
+                                                            </mat-error> -->
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="text-right">
+                                    <!-- <button color="primary" mat-raised-button [disabled]="!formRegister.valid || isSubmitted || !isEmailAvailable " (click)="onSubmit()">Save</button> -->
+
+                                    <!-- <button color="primary" mat-raised-button *ngIf="!isPayOrderShow" [disabled]="isSubmitted" (click)=onSubmit(formRegister.value)>{{paymentId? "Update" : "Approval"}} </button> -->
+                                    <span *ngIf="!isPayOrderShow && !paymentId" matTooltipPosition="above" matTooltip="{{!addPermission ? 'Dont have permission' : (isSubmitted ? 'Processing' : 'Save') }}">
+                                        <button color="primary" mat-raised-button [disabled]="!addPermission || isSubmitted" (click)="confirmDialog('save')">{{paymentId? "Update" : "Save"}} </button>
+                                    </span>
+
+                                    <span *ngIf="!isPayOrderShow && paymentId" matTooltipPosition="above" matTooltip="{{!updatePermission ? 'Dont have permission' : (isSubmitted ? 'Processing' : 'Update') }}">
+                                        <button color="primary" mat-raised-button [disabled]="!updatePermission || isSubmitted" (click)="confirmDialog('save')">{{paymentId? "Update" : "Save"}} </button>
+                                    </span>
+
+                                    <span *ngIf="isPayOrderShow" matTooltipPosition="above" matTooltip="{{!savePayOrderPermission ? 'Dont have permission' : (isSubmitted ? 'Processing' : 'Submit Pay Orderr') }}">
+                                        <button color="primary" mat-raised-button [disabled]="!savePayOrderPermission || isSubmitted" (click)="confirmDialog('payorder_update')">Submit Pay Order</button>        
+                                    </span>
+
+                                    <!-- <button type="submit" class="lms-round-btn login">Signup</button> -->
+                                </div>
+
+
+                            </form>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </mat-card>
+        </div>
+    </div>
+</section>

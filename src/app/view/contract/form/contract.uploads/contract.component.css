@@ -1,0 +1,12 @@
+label {
+    padding: 10px;
+    background: #21974b; 
+    display: table;
+    color: #fff;
+}
+
+
+
+input[type="file"] {
+    display: none;
+}

@@ -1,0 +1,53 @@
+<!-- <secure-header *ngIf="isLogin"></secure-header> -->
+
+<section class="content-block">
+
+
+    <mat-accordion class="example-headers-align" multi="true">
+        <div class="row">
+
+            <!-- manage designation -->
+            <div class="col-sm-12">
+                <mat-expansion-panel [expanded]="step[0].selected" hideToggle="true" *ngIf="designationListPermission || addDesignationPermission">
+
+                    <mat-expansion-panel-header (click)="step[0].selected = !step[0].selected">
+                        <mat-panel-title>
+                            <span class="expansion-panel-heading">Manage Designation</span>
+                            <mat-icon>{{ step[0].selected ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <designation-list></designation-list>
+                </mat-expansion-panel>
+            </div>
+
+            <!-- manage role -->
+            <div class="col-sm-12">
+                <mat-expansion-panel [expanded]="step[1].selected" hideToggle="true" *ngIf="roleListPermission || addRolePermission">
+                    <mat-expansion-panel-header (click)="step[1].selected = !step[1].selected">
+                        <mat-panel-title>
+                            <span class="expansion-panel-heading">Manage Role</span>
+                            <mat-icon>{{ step[1].selected ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <role-list></role-list>
+                </mat-expansion-panel>
+            </div>
+
+            <!-- manage permission -->
+            <div class="col-sm-12">
+                <mat-expansion-panel [expanded]="step[2].selected" hideToggle="true" *ngIf="permissionListPermission || addPermissionPermission">
+                    <mat-expansion-panel-header (click)="step[2].selected = !step[2].selected">
+                        <mat-panel-title>
+                            <span class="expansion-panel-heading">Manage Permission</span>
+                            <mat-icon>{{ step[2].selected ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <permission-list></permission-list>
+                </mat-expansion-panel>
+            </div>
+
+        </div>
+    </mat-accordion>
+
+</section>

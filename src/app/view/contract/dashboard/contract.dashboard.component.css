@@ -1,0 +1,23 @@
+.form-field-year{
+    width: 125px;
+}
+
+.button-mat-icon{
+    margin-left: -290px;
+}
+
+.dashboard .mat-expansion-panel-body {
+    padding: 0 0 0 0 !important;
+    background-color: rgb(254, 254, 254) !important;
+    border-left: none !important;
+}
+
+.div-margin{
+    margin-top: 18px;
+}
+
+.span-error{
+    color: darkslategrey;
+    font-size: 16px;
+    font-style: italic;
+}

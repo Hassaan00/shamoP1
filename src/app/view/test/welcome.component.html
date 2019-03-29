@@ -1,0 +1,141 @@
+<!-- <secure-header *ngIf="isLogin"></secure-header> -->
+
+<section class="content-block">
+
+    <div class="row align-item-center">
+        <div class="col-lg-12 col-md-12 col-xs-12 tr-campaign">
+            <mat-card class="two-row-card">
+                <div class="tr-sec-box">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <mat-card-title>List of Bail(s)</mat-card-title>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="filter-con">
+                                <!-- <mat-form-field>
+                                    <input matInput [(ngModel)]="filter" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                </mat-form-field> -->
+                            </div>
+                            <div class="snipet download-btn">
+                                <!-- <button mat-raised-button color="primary" [routerLink]="['/bail/add']"> Add new
+                                            <i class="material-icons">add</i>
+                                        </button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <mat-table #table [dataSource]="dataSource" class="table table-responsive soc-table">
+
+                            <!-- Serial No -->
+                            <ng-container matColumnDef="sNo">
+                                <mat-header-cell *matHeaderCellDef> S.No </mat-header-cell>
+                                <mat-cell *matCellDef="let u; let i = index;"> {{i + 1}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="caseNo">
+                                <mat-header-cell *matHeaderCellDef> Case No. </mat-header-cell>
+                                <mat-cell *matCellDef="let u">
+                                    <a [routerLink]="['/bail/edit/',u.id]">{{u?.caseCourt?.caseBasic?.caseSystemNumber}}</a>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="option">
+                                <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+                                <mat-cell *matCellDef="let u">
+                                    {{u?.bailFinalStatus?.optionName}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="bailValue">
+                                <mat-header-cell *matHeaderCellDef> Bail Value </mat-header-cell>
+                                <mat-cell *matCellDef="let u">
+                                    {{ u?.bailValue | number:'1.0-2' }}/=
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                                <mat-cell *matCellDef="let u"> {{u?.genericStatus?.statusType}} </mat-cell>
+                            </ng-container>
+
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+
+                        <spinner [visible]='isSpinner'></spinner>
+
+                        <!-- <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                                </mat-paginator> -->
+                        <mat-paginator #paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                            (page)="pageEvent = pageChangeEvent($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <div>
+
+
+        <!-- (mouseenter)="mouseEnter()"  (mouseenter)="mouseEnter('demo-hcOverHc','')" -->
+        <p>jQuery by <label id="demo-hcOverHc">John Resig</label> is a cross-browser JS library designed to simplify the client-side
+            scripting of HTML. It was released in January of 2006 at BarCamp NYC. Used by over 46% of the 10,000 most visited
+            websites, it's the most popular JavaScript library in use today.
+            <label id="demo-hcOverHc1">John Resig</label>
+        </p>
+
+
+        <div *ngFor="let c of list">
+            <span class="media-box pdf" id="demo-basic-21-{{c}}">PDF</span>
+            <!-- <p><label id="demo-hcOverHc-{{c}}" (mouseenter)="mouseEnter('demo-hcOverHc-',c)">John Resig 1</label></p> -->
+            <p><label id="demo-hcOverHc-{{c}}" (mouseover)="mouseEnter('demo-hcOverHc-',c)">John Resig 1</label></p>
+            <p><label id="demo-hcOverHc1">John Resig 2</label></p>
+            <p><label id="demo-hcOverHc1-{{c}}">John Resig 3</label></p>
+        </div>
+        <!-- <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{pageTitle}} Testing
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <img src="./assets/images/logo.jpg" 
+                    class="img-responsive center-block"
+                    style="max-height:300px;padding-bottom:50px"/>
+                </div>
+                <div class="row">
+                    <div class="text-center">Developed by:</div>
+                    <h3 class="text-center">Syed Tabish Akhter</h3>
+
+                    <div class="text-center">@tabish</div>
+
+                </div>
+            </div>
+        </div> -->
+
+
+        <!-- <upload-media [camp]='campaign' (attachmentIds)="receiveIds($event)" (mediaLinks)="receiveMediaLinks($event)"> -->
+
+
+
+        <upload-media>
+
+        </upload-media>
+
+        <!-- <p>Select Event: {{fileSelectMsg}}</p>
+        <p>Upload Event: {{fileUploadMsg}}</p>
+        <td-file-upload #singleFileUpload [(ngModel)]="files" (select)="selectEvent($event)" (upload)="uploadEvent($event)" (cancel)="cancelEvent()"
+            [disabled]="disabled" required>
+            <mat-icon>file_upload</mat-icon><span>{{ singleFileUpload.value?.name }}</span>
+            <ng-template td-file-input-label>
+                <mat-icon>attach_file</mat-icon>
+                <span>
+            Choose a file...
+            <span [hidden]="!singleFileUpload?.required">*</span>
+            </ng-template>
+        </td-file-upload>
+        <button mat-button color="primary" (click)="toggleDisabled()">Toggle Disable</button> -->
+
+    </div>
+
+</section>

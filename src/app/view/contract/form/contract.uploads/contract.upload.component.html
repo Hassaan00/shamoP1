@@ -1,0 +1,56 @@
+<!-- <div class="heading">
+    Upload media
+</div> -->
+
+<div class="row align-item-center bg-camp-4 inner-campaign-box4">
+    <div class="col-md-12">
+
+        <div class="form-group" *ngIf="showUpload">
+            <label id="#bb" color="primary"> Upload Document
+                <input #myInput [disabled]="loading" type="file" id="file" placeholder="Upload Document" (change)="handleFileInput($event.target.files)">
+                <div *ngIf="loading" class="loader ld ld-ring ld-spin-fast"></div>
+               
+            </label>
+
+        </div>
+
+
+        <div class="list-cont">
+
+            <ul>
+                <li *ngFor="let attach of _attachments; let i=index">
+                    <!-- <div class="media-item" *ngFor="let attach of _attachments; let i=index"> -->
+                    <div class="media-item">
+                        <span class="media-box" (click)="onNavigate(attach.documentUrl)">
+                            <img *ngIf="attach.documentExtension == 'image' || attach.documentExtension == '.jpg' || attach.documentExtension == '.JPG' || attach.documentExtension == '.gif' || attach.documentExtension == '.GIF' || attach.documentExtension == '.png' || attach.documentExtension == '.PNG'" [src]="attach.documentUrl" class="media-object" />
+                        </span>
+                        <span class="media-box pdf" (click)="onNavigate(attach.documentUrl)" *ngIf="attach.documentExtension =='.pdf'">PDF</span>
+                        <span class="media-box ppt" (click)="onNavigate(attach.documentUrl)" *ngIf="attach.documentExtension =='.ppt'">PPT</span>
+                        <span class="media-box txt" (click)="onNavigate(attach.documentUrl)" *ngIf="attach.documentExtension =='.txt'">TXT</span>
+                        <span class="media-box xls" (click)="onNavigate(attach.documentUrl)" *ngIf="(attach.documentExtension =='.xls' || attach.documentExtension =='.xlsx' )">XLS</span>
+                        <span class="media-box xls" (click)="onNavigate(attach.documentUrl)" *ngIf="(attach.documentExtension =='.zip' || attach.documentExtension =='.ZIP' )">ZIP</span>
+                        <span class="media-box xls" (click)="onNavigate(attach.documentUrl)" *ngIf="(attach.documentExtension =='.rar' || attach.documentExtension =='.RAR' )">RAR</span>
+                        <span class="media-box doc" (click)="onNavigate(attach.documentUrl)" *ngIf="attach.documentExtension =='.docx' || attach.documentExtension =='.doc' ">DOC</span>
+
+                        <!-- <span class="anchore-tag-line-icn"><i class="material-icons"(click)="removeImage(i)">cancel</i></span> -->
+                        <span *ngIf="showUpload" class="media-box-cancel" matTooltipPosition="above" matTooltip="Remove">
+                            <i class="material-icons"(click)="removeImage(i)">cancel</i>
+                        </span>
+
+                    </div>
+
+                    <div class="file-name" matTooltipPosition="above" matTooltip="{{ attach?.documentOriginalName || 'NA' }}">
+                        <span>{{ attach?.documentOriginalName || "NA" }}</span>
+                    </div>
+
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+    <div class="col-md-6">
+
+    </div>
+
+</div>

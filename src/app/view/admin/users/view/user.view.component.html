@@ -1,0 +1,105 @@
+<!-- <secure-header *ngIf="isLogin"></secure-header> -->
+
+<section class="content-block">
+    <div class="row align-item-center">
+        <div class="col-lg-12 col-md-12 col-xs-12 tr-campaign campaign-detail">
+            <mat-card class="two-row-card">
+                <div class="tr-sec-box">
+                    <div>
+                        <div class="heading">View Profile Details</div>
+                        <div>
+                            <button mat-raised-button (click)="editProfile()">Edit</button>
+                        </div>
+                        <div class="row align-item-center">
+                            <div class="col-lg-8 col-md-8 col-sm-8 campaing-details">
+
+                                <!-- <div class="text-center pbl">
+                                    <upload [userId]='userId' [profilePic]='profilePic'></upload>
+                                </div> -->
+                                <div class="row align-item-center">
+
+                                    <div class="col-lg-3 pvs">
+                                        <label>First Name</label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.firstName}}</span>
+                                    </div>
+
+                                    <div class="col-lg-3 pvs">
+                                        <label>Last Name</label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.lastName}}</span>
+                                    </div>
+
+                                    <div class="col-lg-3 pvs">
+                                        <label>Email Address</label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.userEmail}}</span>
+                                    </div>
+
+                                    <div class="col-lg-3 pvs">
+                                        <label>Department</label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.department?.departmentName}}</span>
+                                    </div>
+
+                                    <div class="col-lg-3 pvs">
+                                        <label>Role</label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.roles[0]?.roleName}}</span>
+                                    </div>
+
+                                    <div class="col-lg-3 pvs">
+                                        <label>Region</label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.regionName}}</span>
+                                    </div>
+
+                                    <div class="col-lg-3 pvs">
+                                        <label>Country</label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.countryName}}</span>
+                                    </div>
+
+
+                                </div>
+                                <!-- <div class="row align-item-center">
+                                    <div class="col-lg-3 pvs">
+                                        <label> Expertise</label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span class="label-dt" *ngFor="let obj of lawFirmDetails.expertise; let $index=index;">{{obj.name}}
+                                            <span class="comma" *ngIf="lawFirmDetails.expertise && lawFirmDetails.expertise.length > $index+1">, </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row align-item-center">
+                                    <div class="col-lg-3 pvs">
+                                        <span>Date</span>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>25/03/2018</span>
+                                    </div>
+                                </div> -->
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr>
+
+
+
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</section>

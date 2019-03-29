@@ -1,0 +1,128 @@
+<!-- <secure-header *ngIf="isLogin"></secure-header> -->
+
+<section class="content-block">
+    <div class="row align-item-center">
+        <div class="col-lg-12 col-md-12 col-xs-12 tr-campaign campaign-detail">
+            <mat-card class="two-row-card">
+                <div class="tr-sec-box">
+                    <div>
+                        <div class="heading">View Profile Details</div>
+                        <div>
+                            <button mat-raised-button (click)="editProfile()">Edit</button>
+                        </div>
+                        <div class="row align-item-center">
+                            <div class="col-lg-8 col-md-8 col-sm-8 campaing-details">
+
+                                <div class="text-center pbl">
+                                    <upload [userId]='userId' [profilePic]='profilePic'></upload>
+                                </div>
+                                <div class="row align-item-center">
+
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>First Name</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.firstName}}</span>
+                                    </div>
+
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>Last Name</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.lastName}}</span>
+                                    </div>
+
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>Email Address</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.email}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row align-item-center" *ngIf="utilityService.checkRoleAllowed(user, ['lawyer'])">
+
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>LawFirm</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span *ngFor='let lawFirm of user?.lawFirms; let i=index;'>
+                                            {{ lawFirm.firmName || 'NA' }}{{ user?.lawFirms?.length == i+1 ? '' : ',' }}
+                                        </span>
+                                        <span *ngIf="user.lawFirms && user.lawFirms.length == 0">
+                                            No LawFirm Associated
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row align-item-center">
+
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>Department</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.department?.departmentName}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row align-item-center">
+
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>Role</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>{{user?.roles[0]?.roleName}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row align-item-center">
+
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>Region</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <!-- <span>{{user?.regionName}}</span> -->
+                                        <span>{{user?.region?.regionName}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row align-item-center">
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>Country</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <!-- <span>{{user?.countryName}}</span> -->
+                                        <span>{{user?.country?.countryName}}</span>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row align-item-center" *ngIf="utilityService.checkRoleAllowed(this.user, ['lawyer'])">
+
+                                    <div class="col-lg-3 pvs">
+                                        <label><b>Resume</b></label>
+                                    </div>
+                                    <div class="col-lg-9 pvs">
+                                        <span>
+                                            <resume [attachments]="user.resume" [showUpload]="false" [type]="'resume'" (attachmentIds)="docUploaded($event)">
+                                                        
+                                            </resume>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr>
+
+
+
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</section>

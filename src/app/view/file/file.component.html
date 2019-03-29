@@ -1,0 +1,101 @@
+<div class="row align-item-center bg-camp-4 inner-campaign-box4">
+    <div class="col-md-12">
+        <div class="observations-box">
+            <div class="form-group" *ngIf="showUpload">
+                <!-- <label for="file">Choose File</label> -->
+
+                <label id="#bb" color="primary"> Upload Document
+                    <input #myInput [disabled]="loading" type="file" id="file" placeholder="Upload Document" (change)="handleFileInput($event.target.files)">
+                    <!-- <div class="button running ld ld-over-inverse"> -->
+                    <div *ngIf="loading" class="loader ld ld-ring ld-spin-fast"></div>
+                        <!-- <div></div>
+                    </div> -->
+                </label>
+
+                <!-- <button id="#bb" mat-raised-button color="primary"> Upload Document
+                <input #myInput type="file" id="file" placeholder="Upload Document" (change)="handleFileInput($event.target.files)">
+            </button> -->
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4 clearfix" *ngFor="let attach of _attachments; let i=index">
+                    <div class="file">
+                        <div class="">
+                            <span class="mediabox" *ngIf="attach.documentExtension == 'image' || attach.documentExtension == '.jpg' || attach.documentExtension == '.JPG' || attach.documentExtension == '.gif' || attach.documentExtension == '.GIF' || attach.documentExtension == '.png' || attach.documentExtension == '.PNG'"
+                                (click)="onNavigate(attach.documentUrl)">
+                                <img [src]="attach.documentUrl" class="media-object" />
+                            </span>
+
+                            <span class="mediabox pdf" (click)="onNavigate(attach.documentUrl)" *ngIf="attach.documentExtension =='.pdf'">PDF</span>
+
+
+                            <span class="mediabox ppt" (click)="onNavigate(attach.documentUrl)" *ngIf="attach.documentExtension =='.ppt'">PPT</span>
+                            <span class="mediabox txt" (click)="onNavigate(attach.documentUrl)" *ngIf="attach.documentExtension =='.txt'">TXT</span>
+                            <span class="mediabox xls" (click)="onNavigate(attach.documentUrl)" *ngIf="(attach.documentExtension =='.xls' || attach.documentExtension =='.xlsx' )">XLS</span>
+                            <span class="mediabox xls" (click)="onNavigate(attach.documentUrl)" *ngIf="(attach.documentExtension =='.zip' || attach.documentExtension =='.ZIP' )">ZIP</span>
+                            <span class="mediabox xls" (click)="onNavigate(attach.documentUrl)" *ngIf="(attach.documentExtension =='.rar' || attach.documentExtension =='.RAR' )">RAR</span>
+
+                            <span class="mediabox doc" (click)="onNavigate(attach.documentUrl)" *ngIf="(attach.documentExtension =='.docx' || attach.documentExtension =='.doc' )">DOC</span>
+
+                            <span *ngIf="showUpload && !_attachments[i].isProcessing" class="media-box-cancel-case" matTooltipPosition="above" matTooltip="Remove">
+                                <i class="material-icons"(click)="removeImage(i)">cancel</i>
+                            </span>
+                            <span *ngIf="_attachments[i].isProcessing" class="media-box-spinner">
+                                <spinner [visible]='true'></spinner>
+                            </span>
+
+                        </div>
+
+                        <div class="file-name" matTooltipPosition="above" matTooltip="{{ attach?.documentOriginalName || 'NA' }}">
+                            <span>
+                                {{ attach?.documentOriginalName || "NA" }}
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="file-name" matTooltipPosition="above" matTooltip="{{ attach?.documentOriginalName || 'NA' }}">
+                        <span>
+                            {{ attach?.documentOriginalName || "NA" }}
+                        </span>
+                    </div> -->
+
+                    <div class="options-file" *ngIf="utilityService.checkRoleAllowed(this.user, ['cad']) && showVerifyOption">
+                        <!-- <form name="form" [formGroup]="docVerificationForm"> -->
+                        <form name="form_{{pIndex}}_{{i}}">
+
+
+                            <!-- <mat-radio-group class="example-radio-group mrl" [(ngModel)]="attach.docAction" formControlName="action"> -->
+                            <mat-radio-group class="example-radio-group mrl" name="docAction_{{pIndex}}_{{i}}" [(ngModel)]="attach.docAction">
+
+                                <!-- <mat-radio-button class="example-radio-button" value="verify"> -->
+                                <mat-radio-button class="example-radio-button" value="VERIFIED">
+                                    Verify
+                                </mat-radio-button>
+
+                                <!-- <mat-radio-button class="example-radio-button" value="reject"> -->
+                                <mat-radio-button class="example-radio-button" value="UNVERIFIED">
+                                    Reject
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <button mat-raised-button [disabled]="!(attach.docAction && attach.docAction != '')" color="primary" (click)="docVerification(attach)"
+                                tabindex="2">SUBMIT</button>
+
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
