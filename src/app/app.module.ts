@@ -32,7 +32,6 @@ import { CanActivateViaMainGuard } from './core/security/main.page.gurad';
 
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from './core/services/auth/auth.service';
-import { ChartsModule } from 'ng2-charts';
 
 
 // import { BlockCopyPasteDirective } from './shared/directives/blockCopyPaste.directive';
@@ -65,7 +64,7 @@ import { ChartsModule } from 'ng2-charts';
     // MatIconModule,
 
     AppRoutingModule,
-    UploadModule, ChartsModule
+    UploadModule, 
 
   ],
   providers: [

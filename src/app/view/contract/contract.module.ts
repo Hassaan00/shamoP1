@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from "../../material/material.module";
 import { SharedModule } from '../../shared/shared.module';
 import { FileModule } from '../file/file.module';
-import { ChartsModule } from 'ng2-charts';
 
 import { CommonModule } from "@angular/common";
 import { ContractComponent } from './form/contract.component';
@@ -27,7 +26,7 @@ import { ContractDashboardComponent } from './dashboard/contract.dashboard.compo
     imports: [
         CommonModule,
         FormsModule, ReactiveFormsModule,
-        MaterialModule, SharedModule, ChartsModule,
+        MaterialModule, SharedModule,
         RouterModule.forChild([
             {
                 path: 'list',
